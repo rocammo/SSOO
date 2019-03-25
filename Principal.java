@@ -1,6 +1,10 @@
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class Principal {
     public static void main(String[] args) {
         FAT fat = new FAT(10);
+        fat.mostrarMD();
     }
 }
 
@@ -9,21 +13,27 @@ class FAT {
     ArrayList<Cluster> clusters;
 
     public FAT(int dimension) {
-        entradasFAT = new ArrayList<EF>(dimension);
+        entradasFat = new ArrayList<EF>(dimension);
         clusters = new ArrayList<Cluster>(dimension);
     }
 
     public void formatear() {
-        for (int i = 0; i < entradasFAT.length; i++) {
-            entradasFat[i].setDisponible(true);
-            entradasFat[i].setFinal(false);
+        Iterator<EF> itr = entradasFat.iterator();
+        while (itr.hasNext()) {
+            itr.next().setDisponible(true);
+            itr.next().setFinal(false);
         }
+    }
+
+    public void mostrarMD() {
+        System.out.println(entradasFat);
     }
 }
 
 class EF {
     boolean disponible;
     boolean fin;
+    // falta cluster siguiente
 
     public EF() {
         this.disponible = true;
@@ -44,6 +54,10 @@ class EF {
 
     public void setFinal(boolean fin) {
         this.fin = fin;
+    }
+
+    public String toString() {
+        return "Disponible: " + disponible + ", Final: "+ fin;
     }
 }
 
@@ -70,6 +84,7 @@ class Directorio extends Cluster {
 class EntradaDir {
     String nombre;
     boolean tipo;
+    // falta cluster inicio
 
     public EntradaDir(String nombre, boolean tipo) {
         this.nombre = nombre;
