@@ -1,12 +1,27 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * TODO
+ *
+ * 1. Cuando borramos varios archivos, falla
+ * 2. Elementos null dentro del ArrayList clusters
+ */
+
 public class Principal {
     public static void main(String[] args) {
         FAT fat = new FAT(10);
         fat.agregar(new Archivo("gataca.avi"));
 
         fat.mostrarMD();
+        fat.agregar(new Archivo("gataca.avi"));
+        fat.agregar(new Archivo("gataca.avi"));
+        fat.mostrarMD();
+        fat.borrarArchivo(new Archivo("gataca.avi"));
+        fat.mostrarMD();
+        // fat.borrarArchivo(new Archivo("gataca.avi"));
+        // fat.borrarArchivo(new Archivo("gataca.avi"));
+        // fat.mostrarMD();
     }
 }
 
@@ -27,6 +42,23 @@ class FAT {
         }
     }
 
+    public void agregar(Cluster c) {
+        if (isLibre()) {
+            clusters.add(c);
+        }
+    }
+
+    public void borrarArchivo(Cluster c) {
+        Iterator<Cluster> itrA = clusters.iterator();
+        for (int i = 0; itrA.hasNext(); i++) {
+            if (((Archivo)itrA.next()).getDato() == ((Archivo)c).getDato()) {
+                entradasFat.get(i).setDisponible(true);
+                clusters.set(i, null); // en la realidad no sucede, pues el SO es un vago
+                return;
+            }
+        }
+    }
+
     public void formatear() {
         Iterator<EF> itr = entradasFat.iterator();
         while (itr.hasNext()) {
@@ -35,8 +67,15 @@ class FAT {
         }
     }
 
-    public void agregar(Cluster c) {
-        clusters.add(c);
+    public boolean isLibre() {
+        for (int i = 0; i < dimension; i++) {
+            if (entradasFat.get(i).isDisponible()) {
+                entradasFat.get(i).setDisponible(false);
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void mostrarMD() {
@@ -53,7 +92,7 @@ class FAT {
             if (i < clusters.size()) { // clusters.get(i) != null
                 System.out.println(".- " + clusters.get(i));
             } else {
-                System.out.println(".- [vacío]");
+                System.out.println(".- null");
             }
         }
     }
@@ -105,6 +144,14 @@ class Archivo extends Cluster {
 
     public String toString() {
         return dato;
+    }
+
+    public String getDato() {
+        return this.dato;
+    }
+
+    public void setDato(String dato) {
+        this.dato = dato;
     }
 }
 
