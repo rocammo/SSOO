@@ -4,6 +4,8 @@ import java.util.Iterator;
 public class Principal {
     public static void main(String[] args) {
         FAT fat = new FAT(10);
+        fat.agregar(new Archivo("gataca.avi"));
+
         fat.mostrarMD();
     }
 }
@@ -12,9 +14,17 @@ class FAT {
     ArrayList<EF> entradasFat;
     ArrayList<Cluster> clusters;
 
+    int dimension;
+
     public FAT(int dimension) {
+        this.dimension = dimension;
+
         entradasFat = new ArrayList<EF>(dimension);
         clusters = new ArrayList<Cluster>(dimension);
+
+        for (int i = 0; i < dimension; i++) {
+            entradasFat.add(new EF());
+        }
     }
 
     public void formatear() {
@@ -25,8 +35,27 @@ class FAT {
         }
     }
 
+    public void agregar(Cluster c) {
+        clusters.add(c);
+    }
+
     public void mostrarMD() {
-        System.out.println(entradasFat);
+        Iterator<EF> itrEF = entradasFat.iterator();
+        System.out.println("\nEntradas FAT: ");
+        for (int i = 0; itrEF.hasNext(); i++) {
+            System.out.format("%2d", i+1);
+            System.out.println(".- " + itrEF.next());
+        }
+
+        System.out.println("\nClusters: ");
+        for (int i = 0; i < dimension; i++) {
+            System.out.format("%2d", i+1);
+            if (i < clusters.size()) { // clusters.get(i) != null
+                System.out.println(".- " + clusters.get(i));
+            } else {
+                System.out.println(".- [vacío]");
+            }
+        }
     }
 }
 
@@ -57,12 +86,14 @@ class EF {
     }
 
     public String toString() {
-        return "Disponible: " + disponible + ", Final: "+ fin;
+        return "Disponible: " + disponible + ", Final: " + fin;
     }
 }
 
 abstract class Cluster {
-
+    public String toString() {
+        return "";
+    }
 }
 
 class Archivo extends Cluster {
@@ -71,6 +102,10 @@ class Archivo extends Cluster {
     public Archivo(String dato) {
         this.dato = dato;
     }
+
+    public String toString() {
+        return dato;
+    }
 }
 
 class Directorio extends Cluster {
@@ -78,6 +113,10 @@ class Directorio extends Cluster {
 
     public Directorio() {
         entradas = new ArrayList<EntradaDir>();
+    }
+
+    public String toString() {
+        return "" + entradas;
     }
 }
 
@@ -89,5 +128,9 @@ class EntradaDir {
     public EntradaDir(String nombre, boolean tipo) {
         this.nombre = nombre;
         this.tipo = tipo;
+    }
+
+    public String toString() {
+        return "Nombre: " + nombre + ", Tipo: " + tipo;
     }
 }
