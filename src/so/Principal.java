@@ -1,11 +1,5 @@
 package so;
 
-/**
- * TODO
- *
- * 1. Cuando borramos varios archivos, falla
- */
-
 public class Principal {
     public static void main(String[] args) {
         FAT fat = new FAT(10);
@@ -28,7 +22,6 @@ public class Principal {
         fat.mostrarMD();
         fat.borrarArchivo(new Archivo("asf"));
         fat.mostrarMD();
-        fat.borrarArchivo(new Archivo("gat.ava"));
         fat.borrarArchivo(new Archivo("gat.ava"));
         fat.mostrarMD();
         
