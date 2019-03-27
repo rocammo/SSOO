@@ -21,9 +21,13 @@ public class FAT {
     }
 
     public void agregar(Cluster c) {
-        if (isLibre()) {
-            clusters.add(c);
-        }
+    	int index = isLibre();
+    	if (index == -1) {
+    		System.out.println("\n[ERROR] Disco lleno.");
+    		return;
+    	}
+    	
+        clusters.add(index, c);
     }
 
     public void borrarArchivo(Cluster c) {
@@ -31,10 +35,11 @@ public class FAT {
         for (int i = 0; itrA.hasNext(); i++) {
             if (((Archivo)itrA.next()).getDato() == ((Archivo)c).getDato()) {
                 entradasFat.get(i).setDisponible(true);
-                clusters.set(i, null); // en la realidad no sucede, pues el SO es un vago
                 return;
             }
         }
+        
+        System.out.println("[ERROR] No se ha encontrado el archivo");
     }
 
     public void formatear() {
@@ -56,22 +61,22 @@ public class FAT {
         System.out.println("\nClusters: ");
         for (int i = 0; i < dimension; i++) {
             System.out.format("%2d", i+1);
-            if (i < clusters.size()) { // clusters.get(i) != null
-                System.out.println(".- " + clusters.get(i));
+            if (entradasFat.get(i).isDisponible()) {
+            	System.out.println(".- VACIO");
             } else {
-                System.out.println(".- VACIO");
+            	System.out.println(".- " + clusters.get(i));
             }
         }
     }
 
-    private boolean isLibre() {
+    private int isLibre() {
         for (int i = 0; i < dimension; i++) {
             if (entradasFat.get(i).isDisponible()) {
                 entradasFat.get(i).setDisponible(false);
-                return true;
+                return i;
             }
         }
 
-        return false;
+        return -1;
     }
 }
