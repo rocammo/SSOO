@@ -31,25 +31,36 @@ public class SO {
 					fat.mostrarMD();
 					break;
 				case 2: {
-					System.out.println("Introduzca el nombre del archivo: ");
-					String nombreArchivo = input.nextLine();
+					System.out.print("Introduzca el nombre del archivo: ");
+					String nombreArchivo = input.next();
 					fat.agregar(new Archivo(nombreArchivo));
 					break;
 				}
 				case 3: {
-					System.out.println("Introduzca el nombre del archivo: ");
-					String nombreArchivo = input.nextLine();
+					System.out.print("Introduzca el nombre del archivo: ");
+					String nombreArchivo = input.next();
 					fat.borrarArchivo(new Archivo(nombreArchivo));
 					break;
 				}
 			}
+			pressAnyKeyToContinue();
 			clearScreen();
 		}
 		input.close();
 	}
 	
-	public void clearScreen() {  
+	private void clearScreen() {  
 	    System.out.print("\033[H\033[2J");  
 	    System.out.flush();  
 	}
+	
+	private void pressAnyKeyToContinue()
+	 { 
+        System.out.println("\nPresione ENTER para continuar...");
+        try {
+            System.in.read();
+        } catch(Exception e) {
+        	e.printStackTrace();
+        }
+	 }
 }
