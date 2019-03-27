@@ -40,7 +40,7 @@ public class FAT {
             }
         }
         
-        System.out.println("[ERROR] No se ha encontrado el archivo");
+        System.out.println("\n[ERROR] Archivo no encontrado.");
     }
 
     public void formatear() {
