@@ -33,7 +33,7 @@ public class FAT {
     public void borrarArchivo(Cluster c) {
         Iterator<Cluster> itrA = clusters.iterator();
         for (int i = 0; itrA.hasNext(); i++) {
-            if (((Archivo)itrA.next()).getDato() == ((Archivo)c).getDato() &&
+            if (((Archivo)itrA.next()).getDato().equals(((Archivo)c).getDato()) &&
             		!entradasFat.get(i).isDisponible()) {
                 entradasFat.get(i).setDisponible(true);
                 return;
