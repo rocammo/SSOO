@@ -3,11 +3,12 @@ package so;
 public class EF {
     boolean disponible;
     boolean fin;
-    // falta cluster siguiente
+    int siguiente;
 
     public EF() {
         this.disponible = true;
         this.fin = false;
+        this.siguiente = -1;
     }
 
     public boolean isDisponible() {
@@ -26,7 +27,16 @@ public class EF {
         this.fin = fin;
     }
 
-    public String toString() {
-        return "Disponible: " + disponible + ", Final: " + fin;
+	public int getSiguiente() {
+		return siguiente;
+	}
+
+	public void setSiguiente(int siguiente) {
+		this.siguiente = siguiente;
+	}
+	
+	public String toString() {
+    	String strSig = (siguiente != -1) ? "C" + siguiente : "";
+        return "Disponible: " + disponible + ", Final: " + fin + ", Siguiente: " + strSig;
     }
 }

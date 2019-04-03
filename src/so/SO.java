@@ -6,7 +6,7 @@ public class SO extends Proceso implements Runnable {
 	FAT fat;
 	ListaProcesos listaProcesos;
 	
-	private final int SHUTDOWN_SIGNAL = 4;
+	private final int SHUTDOWN_SIGNAL = 5;
 	
 	public SO(String nombre, int numClusters) {
 		super(nombre);
@@ -14,7 +14,7 @@ public class SO extends Proceso implements Runnable {
 		this.fat = new FAT(numClusters);
 		
 		this.listaProcesos = new ListaProcesos();
-		listaProcesos.crearProceso(this);
+		listaProcesos.crearProceso(this); // Proceso 'Consola'
 	}
 	
 	public void menu() {
@@ -23,7 +23,8 @@ public class SO extends Proceso implements Runnable {
 		System.out.println("1.- Mostrar estado Fat.");
 		System.out.println("2.- Agregar archivo.");
 		System.out.println("3.- Borrar archivo.");
-		System.out.println("4.- Apagar.");
+		System.out.println("4.- Borrar carpeta cada cierto intervalo.");
+		System.out.println("5.- Apagar.");
 		System.out.println();
 		
 		System.out.print("> ");
@@ -45,6 +46,11 @@ public class SO extends Proceso implements Runnable {
 				fat.borrarArchivo(new Archivo(nombreArchivo));
 				break;
 			}
+			case 4:
+				BorraTMPcada5Segundos borraTMPcada5Segundos =
+					new BorraTMPcada5Segundos(fat, 5, "BorraTMPcada5Segundos");
+				listaProcesos.crearProceso(borraTMPcada5Segundos);
+				break;
 			case SHUTDOWN_SIGNAL:
 				running = false;
 		}

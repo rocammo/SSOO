@@ -8,23 +8,37 @@ public class Directorio extends Cluster {
     public Directorio() {
         entradas = new ArrayList<EntradaDir>();
     }
+    
+//    public void agregar(EntradaDir eD) {
+//    	entradas.add(eD);
+//    }
+//    
+//    public void borrar(int index) {
+//    	entradas.remove(index);
+//    }
+//    
+//    public void borrar(EntradaDir eD) {
+//    	entradas.remove(eD);
+//    }
 
     public String toString() {
         return "" + entradas;
     }
 }
 
+enum Tipo { ARCHIVO, DIRECTORIO };
 class EntradaDir {
     String nombre;
-    boolean tipo;
-    // falta cluster inicio
+    Tipo tipo;
+    int clusterIni;
 
-    public EntradaDir(String nombre, boolean tipo) {
+    public EntradaDir(String nombre, Tipo tipo, int clusterIni) {
         this.nombre = nombre;
         this.tipo = tipo;
+        this.clusterIni = clusterIni;
     }
 
     public String toString() {
-        return "Nombre: " + nombre + ", Tipo: " + tipo;
+        return "Nombre: " + nombre + ", Tipo: " + tipo + ", ClusterIni: " + clusterIni;
     }
 }

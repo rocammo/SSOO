@@ -28,7 +28,7 @@ public class ListaProcesos {
 		}
 	}
 	
-	public void mostrarProceso() {
+	public void mostrarProcesos() {
 		Iterator<Proceso> itrLP = listaProcesos.iterator();
         System.out.println("\nProcesos: ");
         for (int i = 0; itrLP.hasNext(); i++) {

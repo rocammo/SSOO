@@ -16,8 +16,9 @@ public class FAT {
         clusters = new ArrayList<Cluster>(dimension);
 
         for (int i = 0; i < dimension; i++) {
-            entradasFat.add(new EF());
+            entradasFat.add(new EF());	// tabla FAT
         }
+//        clusters.add(new Directorio()); // cluster 0: directorio raiz
     }
 
     public void agregar(Cluster c) {
@@ -28,6 +29,11 @@ public class FAT {
     	}
     	
         clusters.add(index, c);
+        
+        // temp: agregado al directorio raiz
+//        ((Directorio) clusters.get(0)).agregar(new EntradaDir(((Archivo) c).getDato(),
+//        										Tipo.ARCHIVO,
+//        										clusters.get(index)));
     }
 
     public void borrarArchivo(Cluster c) {
@@ -41,6 +47,10 @@ public class FAT {
         }
         
         System.out.println("\n[ERROR] Archivo no encontrado.");
+    }
+    
+    public void borrarContenidoDir(String nombre) {
+    	
     }
 
     public void formatear() {
