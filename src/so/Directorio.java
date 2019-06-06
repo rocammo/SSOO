@@ -1,6 +1,7 @@
 package so;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Directorio extends Cluster {
     ArrayList<EntradaDir> entradas;
@@ -9,17 +10,24 @@ public class Directorio extends Cluster {
         entradas = new ArrayList<EntradaDir>();
     }
     
-//    public void agregar(EntradaDir eD) {
-//    	entradas.add(eD);
-//    }
-//    
-//    public void borrar(int index) {
-//    	entradas.remove(index);
-//    }
-//    
-//    public void borrar(EntradaDir eD) {
-//    	entradas.remove(eD);
-//    }
+    public void agregarEntradaDir(EntradaDir entradaDir) {
+    	entradas.add(entradaDir);
+    }
+    
+    public boolean eliminarEntradaDir(String nombre) {
+    	Iterator<EntradaDir> itrED = entradas.iterator();
+    	
+    	int index = 0;
+    	while (itrED.hasNext()) {
+    		if (itrED.next().nombre.equals(nombre)) {
+    			entradas.remove(index);
+    			return true;
+    		}
+    		index++;
+    	}
+    	
+    	return false;
+    }
 
     public String toString() {
         return "" + entradas;
